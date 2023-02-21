@@ -1,26 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="window">
+    <div class="main_nav_bar"></div>
+    <div class="msg_box">
+      <div class="msg_nav_bar"></div>
+      <div class="chats">
+        <div class="search">
+          <input class="input_search" type="text" />
+        </div>
+        <div class="chats_container">
+          <div class="chat_item">
+            <div class="avatar_box">
+              <div class="avatar"></div>
+            </div>
+            <div class="chat_info">
+              <div class="name">{{ current_name }}</div>
+              <div class="latest_message">{{ latest_message }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
 export default {
   name: "App",
-  components: {
-    HelloWorld,
+  data() {
+    return {
+      current_name: "Дмитрий Дмитривич",
+      latest_message: "был в сети 30 мин. назад",
+    };
   },
+  components: {},
 };
 </script>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import "stylesheet.scss";
 </style>
