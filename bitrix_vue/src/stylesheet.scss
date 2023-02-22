@@ -1,6 +1,12 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  @font-face {
+    src: url("fonts/HelveticaRegular.woff");
+  }
+  font-family: Helvetica, sans-serif;
 }
 
 body {
@@ -26,7 +32,7 @@ input {
 }
 
 .msg_box {
-  width: 100%;
+  width: 1375px;
   display: flex;
 }
 
@@ -137,12 +143,22 @@ input {
 
 .name {
   margin-right: 5px;
+  font-weight: 600;
   overflow: hidden;
   color: #181818;
 }
 
 .latest_message {
   color: #777777;
+}
+
+.latest_time {
+  position: absolute;
+  color: #777777;
+  right: 0;
+  padding-top: 7px;
+  font-size: 11px;
+  top: 0;
 }
 
 .empty_dialogue {

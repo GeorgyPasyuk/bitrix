@@ -23,13 +23,14 @@
           <input class="input_search" placeholder="Поиск" type="text" />
         </div>
         <div class="chats_container">
-          <div class="chat_item">
+          <div class="chat_item" @click="chatWindow">
             <div class="avatar_box">
               <div class="avatar"></div>
             </div>
             <div class="chat_info">
               <div class="name">{{ current_name }}</div>
               <div class="latest_message">{{ latest_message }}</div>
+              <div class="latest_time">{{ latest_time }}</div>
             </div>
           </div>
         </div>
@@ -49,10 +50,15 @@ export default {
   data() {
     return {
       current_name: "Дмитрий Дмитривич",
-      latest_message: "был в сети 30 мин. назад",
+      latest_message: "привет",
+      latest_time: "12:30",
+      chatWindow: "",
     };
   },
   components: {},
+  methods: {
+    addDialogue() {},
+  },
 };
 </script>
 <style>
