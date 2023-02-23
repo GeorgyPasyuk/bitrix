@@ -19,24 +19,35 @@
       <div class="chats">
         <div class="search">
           <span class="lupa"></span>
-          <span class="cross"></span>
-          <input class="input_search" placeholder="Поиск" type="text" />
+          <span class="cross" @click="clearInput"></span>
+          <input
+            class="input_search"
+            id="searchInput"
+            placeholder="Поиск"
+            type="text"
+          />
         </div>
         <div class="chats_container">
-          <div class="chat_item" @click="chatWindow">
+          <div
+            class="chat_item"
+            @click="sendChatId(item.account_id)"
+            v-for="item in items"
+            v-bind:key="item.account_id"
+          >
             <div class="avatar_box">
               <div class="avatar"></div>
             </div>
             <div class="chat_info">
-              <div class="name">{{ current_name }}</div>
-              <div class="latest_message">{{ latest_message }}</div>
-              <div class="latest_time">{{ latest_time }}</div>
+              <div class="name">{{ item.account_name }}</div>
+              <div class="latest_message">abc</div>
+              <div class="latest_time">12:30</div>
             </div>
           </div>
         </div>
       </div>
       <div class="empty_dialogue">
-        <div class="empty_dialogue_text">
+        <current-chat v-if="this.currentId !== ''" />
+        <div class="empty_dialogue_text" v-if="this.currentId === ''">
           Начните диалог, выбрав контакт из списка слева.
         </div>
       </div>
@@ -45,19 +56,46 @@
 </template>
 
 <script>
+import currentChat from "@/components/currentChat";
+
 export default {
   name: "App",
   data() {
     return {
-      current_name: "Дмитрий Дмитривич",
-      latest_message: "привет",
-      latest_time: "12:30",
-      chatWindow: "",
+      items: [
+        {
+          account_id: "1",
+          account_name: "Alex",
+        },
+        {
+          account_id: "2",
+          account_name: "Brad",
+        },
+        {
+          account_id: "3",
+          account_name: "Chad",
+        },
+        {
+          account_id: "4",
+          account_name: "Darla",
+        },
+        {
+          account_id: "5",
+          account_name: "Katyushka",
+        },
+      ],
+      currentId: "",
     };
   },
-  components: {},
+  components: { currentChat },
   methods: {
-    addDialogue() {},
+    clearInput() {
+      const input = document.getElementById("searchInput");
+      return (input.value = "");
+    },
+    sendChatId(accountId) {
+      this.currentId = accountId;
+    },
   },
 };
 </script>

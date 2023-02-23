@@ -32,8 +32,9 @@ input {
 }
 
 .msg_box {
-  width: 1375px;
+  width: auto;
   display: flex;
+  align-items: stretch;
 }
 
 .msg_nav_bar {
@@ -87,7 +88,10 @@ input {
   right: 0;
   width: 16px;
   height: 18px;
-  background: url("./images/cross.png") no-repeat scroll -14px -62px;;
+  background: url("./images/cross.png") no-repeat scroll -14px -62px;
+}
+.cross:hover {
+  cursor: pointer;
 }
 
 .input_search {
@@ -127,7 +131,7 @@ input {
 .avatar {
   width: 45px;
   height: 45px;
-  background-color: #000;
+  background-color: #333333;
   border-radius: 100%;
 }
 
@@ -162,7 +166,7 @@ input {
 }
 
 .empty_dialogue {
-  width: 100%;
+  width: 1482px;
   height: 100%;
   background-color: white;
 }
@@ -176,3 +180,4 @@ input {
   margin: 15px;
   background: url("./images/no-items-v2.png") no-repeat center 89px;
 }
+
