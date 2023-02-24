@@ -30,8 +30,8 @@
         <div class="chats_container">
           <div
             class="chat_item"
-            @click="sendChatId(item.account_id)"
-            v-for="item in items"
+            @click="sendChatId(index)"
+            v-for="(item, index) in items"
             v-bind:key="item.account_id"
           >
             <div class="avatar_box">
@@ -39,15 +39,20 @@
             </div>
             <div class="chat_info">
               <div class="name">{{ item.account_name }}</div>
-              <div class="latest_message">abc</div>
+              <div class="latest_message">{{ latestMessage }}</div>
               <div class="latest_time">12:30</div>
             </div>
           </div>
         </div>
       </div>
       <div class="empty_dialogue">
-        <current-chat v-if="this.currentId !== ''" />
-        <div class="empty_dialogue_text" v-if="this.currentId === ''">
+        <current-chat
+          v-if="this.currentIndex !== ''"
+          :items="items"
+          :currentIndex="currentIndex"
+          @customChange="logChange"
+        />
+        <div class="empty_dialogue_text" v-if="this.currentIndex === ''">
           Начните диалог, выбрав контакт из списка слева.
         </div>
       </div>
@@ -60,6 +65,7 @@ import currentChat from "@/components/currentChat";
 
 export default {
   name: "App",
+  props: ["sentMessages"],
   data() {
     return {
       items: [
@@ -84,7 +90,8 @@ export default {
           account_name: "Katyushka",
         },
       ],
-      currentId: "",
+      currentIndex: "",
+      latestMessage: "",
     };
   },
   components: { currentChat },
@@ -93,11 +100,11 @@ export default {
       const input = document.getElementById("searchInput");
       return (input.value = "");
     },
-    sendChatId(accountId) {
-      this.currentId = accountId;
+    sendChatId(index) {
+      this.currentIndex = index;
     },
-    getChildVariable() {
-      console.log(this.currentChat.sentMessages);
+    logChange(event) {
+      this.latestMessage = event;
     },
   },
 };

@@ -1,6 +1,8 @@
 <template>
   <div class="main">
-    <div class="header"></div>
+    <div class="header">
+      {{ items[currentIndex].account_name }}
+    </div>
     <div class="messageContainer">
       <span
         class="messageItems"
@@ -46,6 +48,7 @@
 <script>
 export default {
   name: "currentChat",
+  props: ["items", "currentIndex"],
   data() {
     return {
       input: "",
@@ -53,11 +56,15 @@ export default {
     };
   },
   methods: {
-    getMessage() {
+    getMessage(event) {
       this.splitMessage();
       this.sentMessages.message.push(this.input);
       this.getTime();
       this.input = "";
+      this.sendEmit(event);
+    },
+    sendEmit(event) {
+      this.$emit("customChange", event.target.value);
     },
     splitMessage() {
       let symbol = [...this.input];
