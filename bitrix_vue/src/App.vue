@@ -18,7 +18,7 @@
       </div>
       <div class="chats">
         <div class="search">
-          <span class="lupa"></span>
+          <span class="lupa" @click="getChildVariable"></span>
           <span class="cross" @click="clearInput"></span>
           <input
             class="input_search"
@@ -95,6 +95,9 @@ export default {
     },
     sendChatId(accountId) {
       this.currentId = accountId;
+    },
+    getChildVariable() {
+      console.log(this.currentChat.sentMessages);
     },
   },
 };

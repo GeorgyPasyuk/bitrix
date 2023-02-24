@@ -91,7 +91,7 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
+  position: absolute;
   bottom: 0;
   right: 0;
   width: 78px;
@@ -99,4 +99,13 @@ textarea {
   min-height: 19px;
   max-height: 21.5px;
   font-size: 11px;
+}
+
+.currentTime {
+  position: relative;
+  right: 0;
+}
+
+.likes {
+  position: relative;
 }

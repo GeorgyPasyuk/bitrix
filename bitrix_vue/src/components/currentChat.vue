@@ -4,15 +4,20 @@
     <div class="messageContainer">
       <span
         class="messageItems"
-        v-for="sentMessage in sentMessages"
-        v-bind:key="sentMessage"
+        v-for="(item, index) in sentMessages.message"
+        v-bind:key="item"
       >
         <div class="messageAvatar"></div>
         <div class="sentMessage">
-          {{ sentMessage }}
+          {{ item }}
           <div class="infoContainer">
-            <div class="likes">1</div>
-            <div class="currentTime">{{ sentMessages.time }}</div>
+            <div class="likes">
+              {{ sentMessages.likes[index] }}
+              <img @click="liked" src="./images/like.svg" alt="" />
+            </div>
+            <div class="currentTime">
+              {{ sentMessages.time[index] }}
+            </div>
           </div>
         </div>
       </span>
@@ -25,7 +30,7 @@
         rows="10"
         class="textInput"
         v-on:keydown.enter="getMessage"
-        v-model="this.messages"
+        v-model="this.input"
       ></textarea>
       <div class="icons">
         <img src="./images/icons/addFiles.svg" alt="" />
@@ -43,32 +48,31 @@ export default {
   name: "currentChat",
   data() {
     return {
-      messages: "",
-      sentMessages: { message: "", time: "" },
+      input: "",
+      sentMessages: { message: [], time: [], likes: [] },
     };
   },
   methods: {
     getMessage() {
-      const textarea = document.getElementById("textarea");
       this.splitMessage();
-      console.log(this.messages);
-      console.log(this.sentMessages);
-      this.sentMessages.message = this.messages;
+      this.sentMessages.message.push(this.input);
       this.getTime();
-      textarea.value = "";
-      this.messages = "";
+      this.input = "";
     },
     splitMessage() {
-      let symbol = [...this.messages];
+      let symbol = [...this.input];
       if (symbol > 130) {
-        this.messages.push(`\n`);
+        this.input.push(`\n`);
       }
     },
     getTime() {
       let date = new Date();
       let hours = date.getHours();
       let minutes = date.getMinutes();
-      this.sentMessages.time = hours + ":" + minutes;
+      this.sentMessages.time.push(hours + ":" + minutes);
+    },
+    liked() {
+      this.sentMessages.likes.push(1);
     },
   },
 };
