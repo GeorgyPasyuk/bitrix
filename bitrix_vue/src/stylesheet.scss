@@ -131,8 +131,10 @@ input {
 .avatar {
   width: 45px;
   height: 45px;
-  background-color: #333333;
   border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .chat_info {
@@ -180,4 +182,3 @@ input {
   margin: 15px;
   background: url("./images/no-items-v2.png") no-repeat center 89px;
 }
-

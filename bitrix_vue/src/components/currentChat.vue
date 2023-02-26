@@ -55,16 +55,40 @@ export default {
       sentMessages: { message: [], time: [], likes: [] },
     };
   },
+  mounted() {
+    const storageObject = JSON.parse(
+      localStorage.getItem(`${this.currentIndex}`)
+    );
+    if (storageObject === null) {
+      return;
+    } else {
+      for (let i = 0; i < storageObject.message.length; i++) {
+        this.sentMessages.message.push(storageObject.message[i]);
+        this.sentMessages.time.push(storageObject.time[i]);
+        this.sentMessages.likes.push(storageObject.likes[i]);
+      }
+      this.sentMessages.index = this.currentIndex;
+    }
+  },
   methods: {
-    getMessage(event) {
+    getMessage() {
       this.splitMessage();
       this.sentMessages.message.push(this.input);
       this.getTime();
+      this.storageManagerSet();
       this.input = "";
-      this.sendEmit(event);
     },
-    sendEmit(event) {
-      this.$emit("customChange", event.target.value);
+    sendEmit(currentTime) {
+      let latestMessage = {
+        index: "",
+        message: "",
+        time: "",
+      };
+      latestMessage.index = this.currentIndex;
+      latestMessage.message = this.input;
+      latestMessage.time = currentTime;
+      console.log(latestMessage);
+      this.$emit("customChange", latestMessage);
     },
     splitMessage() {
       let symbol = [...this.input];
@@ -76,10 +100,18 @@ export default {
       let date = new Date();
       let hours = date.getHours();
       let minutes = date.getMinutes();
-      this.sentMessages.time.push(hours + ":" + minutes);
+      let currentTime = hours + ":" + minutes;
+      this.sentMessages.time.push(currentTime);
+      this.sendEmit(currentTime);
     },
     liked() {
       this.sentMessages.likes.push(1);
+    },
+    storageManagerSet() {
+      localStorage.setItem(
+        `${this.currentIndex}`,
+        JSON.stringify(this.sentMessages)
+      );
     },
   },
 };
