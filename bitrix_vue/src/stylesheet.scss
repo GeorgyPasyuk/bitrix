@@ -4,15 +4,15 @@
   box-sizing: border-box;
   flex-shrink: 0;
   @font-face {
-    src: url("fonts/HelveticaRegular.woff");
+    font-family: helveticaNeue, sans-serif;
+    src: url("fonts/helveticaneuecyr_roman.otf");
   }
-  font-family: Helvetica, sans-serif;
 }
 
 body {
   background-color: #333;
-  font-family: var(--ui-font-family-primary, var(--ui-font-family-helvetica));
   font-size: 14px;
+  font-family: helveticaNeue, sans-serif;
 }
 
 input {
@@ -28,7 +28,7 @@ input {
 .main_nav_bar {
   width: 66px;
   height: 100vh;
-  background-color: aquamarine;
+  background: url("./images/background.jpg");
 }
 
 .msg_box {
@@ -60,6 +60,11 @@ input {
 .msg_icons {
   padding-top: 7px;
   padding-bottom: 7px;
+}
+
+.settingsIcon {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .chats {
@@ -94,6 +99,22 @@ input {
   cursor: pointer;
 }
 
+.createDialogue {
+  position: absolute;
+  right: 0;
+  width: 81px;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  background-image: url("./images/icons/createDialogue.svg");
+  background-color: #ecf0f2;
+  background-repeat: no-repeat;
+  border-radius: 18px;
+  color: #525c69;
+}
+
 .input_search {
   width: 94%;
   height: 47px;
@@ -110,7 +131,7 @@ input {
 
 .chat_item {
   display: flex;
-  height: 59px;
+  height: 69px;
   transition: background 0.3s;
   box-sizing: border-box;
   border-bottom: 1px solid #e5e5e5;
@@ -122,10 +143,13 @@ input {
 
 .avatar_box {
   width: 65px;
-  height: 59px;
+  height: 69px;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #fff;
+  font-size: 18px;
+  text-transform: uppercase;
 }
 
 .avatar {
@@ -149,20 +173,33 @@ input {
 
 .name {
   margin-right: 5px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   overflow: hidden;
   color: #181818;
+  margin-bottom: 4px;
 }
 
 .latest_message {
   color: #777777;
 }
 
+.itemRead {
+  width: 12px;
+  height: 8px;
+  margin-right: 3px;
+}
+.itemReply {
+  width: 12px;
+  height: 12px;
+  margin-right: 4px;
+}
+
 .latest_time {
   position: absolute;
   color: #777777;
   right: 0;
-  padding-top: 7px;
+  padding-top: 10px;
   font-size: 11px;
   top: 0;
 }

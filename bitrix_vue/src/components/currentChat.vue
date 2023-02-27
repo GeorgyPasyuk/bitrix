@@ -1,9 +1,30 @@
 <template>
   <div class="main">
     <div class="header">
-      {{ items[currentIndex].account_name }}
+      <div class="messageAvatar"></div>
+      <div class="headerInfo">
+        <div class="headerFullname">
+          <div class="headerName">{{ items[currentIndex].account_name }}</div>
+          <div class="headerTime">
+            Заходил сегодня в {{ latestTime[currentIndex] }}
+          </div>
+        </div>
+        <div class="headerBg">пользователь</div>
+      </div>
+      <div class="headerButtons">
+        <button class="callBtn">Видеозвонок HD</button>
+        <button class="inviteBtn">+ Пригласить</button>
+        <button class="findBtn">
+          <img src="./images/icons/lupa.svg" alt="" />
+        </button>
+      </div>
     </div>
     <div class="messageContainer">
+      <div class="previousContainer">
+        <span class="previousMsg">Загрузить более ранние сообщения</span>
+        <a href="#" class="previousDate">сегодня</a>
+      </div>
+
       <span
         class="messageItems"
         v-for="(item, index) in sentMessages.message"
@@ -15,10 +36,15 @@
           <div class="infoContainer">
             <div class="likes">
               {{ sentMessages.likes[index] }}
-              <img @click="liked" src="./images/like.svg" alt="" />
+              <img
+                @click="liked"
+                src="./images/like.svg"
+                alt=""
+                class="likedMsg"
+              />
             </div>
             <div class="currentTime">
-              {{ sentMessages.time[index] }}
+              Нравится {{ sentMessages.time[index] }}
             </div>
           </div>
         </div>
@@ -33,6 +59,7 @@
         class="textInput"
         v-on:keydown.enter="getMessage"
         v-model="this.input"
+        placeholder="Введите сообщение"
       ></textarea>
       <div class="icons">
         <img src="./images/icons/addFiles.svg" alt="" />
@@ -48,11 +75,12 @@
 <script>
 export default {
   name: "currentChat",
-  props: ["items", "currentIndex"],
+  props: ["items", "currentIndex", "latestTime"],
   data() {
     return {
       input: "",
       sentMessages: { message: [], time: [], likes: [] },
+      formattedMessages: "",
     };
   },
   mounted() {
@@ -71,13 +99,6 @@ export default {
     }
   },
   methods: {
-    getMessage() {
-      this.splitMessage();
-      this.sentMessages.message.push(this.input);
-      this.getTime();
-      this.storageManagerSet();
-      this.input = "";
-    },
     sendEmit(currentTime) {
       let latestMessage = {
         index: "",
@@ -87,13 +108,14 @@ export default {
       latestMessage.index = this.currentIndex;
       latestMessage.message = this.input;
       latestMessage.time = currentTime;
-      console.log(latestMessage);
       this.$emit("customChange", latestMessage);
     },
     splitMessage() {
-      let symbol = [...this.input];
-      if (symbol > 130) {
-        this.input.push(`\n`);
+      let i = 0;
+      while (i < this.input.length) {
+        let next = this.input.substr(i, 90);
+        this.formattedMessages += `${next}\n`;
+        i += 130;
       }
     },
     getTime() {
@@ -112,6 +134,13 @@ export default {
         `${this.currentIndex}`,
         JSON.stringify(this.sentMessages)
       );
+    },
+    getMessage() {
+      this.splitMessage();
+      this.sentMessages.message.push(this.formattedMessages);
+      this.getTime();
+      this.storageManagerSet();
+      this.input = "";
     },
   },
 };
